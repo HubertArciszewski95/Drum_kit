@@ -2,17 +2,29 @@ const numberOfDrumButtons = document.querySelectorAll(".drum").length
 
 // Mouse event listener
 for (let i = 0; i < numberOfDrumButtons; i++) {
-    document.querySelectorAll(".drum")[i].addEventListener("click", function () {
+    let element = document.querySelectorAll(".drum")[i];
+    
+    // Add listener to all drum buttons on page
+    element.addEventListener("click", () => {
         // This is reffering to the clicked element
-        playSong(this.textContent);
+        playSong(element.textContent);
     });
 }
 
 // Keyboard event listener
-document.addEventListener("keypress", function (event) {
-    const aviableKeys = ["w", "a", "s", "d", "j", "k", "l"];
-    playSong(event.key);
-})
+document.addEventListener("keypress", (event) => {
+    const aviableKeys = ["wasdjkl"];
+    let keyPress = event.key;
+    let pattern = new RegExp(keyPress);
+    let aviableKeyPress = pattern.test(aviableKeys);
+
+    if (aviableKeyPress) {
+        playSong(keyPress);
+    }
+    else {
+        console.error(`Not aviable key was pressed - ${keyPress}`);
+    }
+});
 
 const sounds = {
     w: "tom-1.mp3",
@@ -24,7 +36,7 @@ const sounds = {
     l: "kick-bass.mp3"
 }
 
-function playSong (buttonClick) {
+const playSong = (buttonClick) => {
     const audio = new Audio(`./sounds/${sounds[buttonClick]}`);
     audio.play(); 
 }

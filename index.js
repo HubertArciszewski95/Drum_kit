@@ -8,11 +8,12 @@ for (let i = 0; i < numberOfDrumButtons; i++) {
     element.addEventListener("click", () => {
         // This is reffering to the clicked element
         playSong(element.textContent);
+        animation(element.textContent);
     });
 }
 
 // Keyboard event listener
-document.addEventListener("keypress", (event) => {
+document.addEventListener("keydown", (event) => {
     const aviableKeys = ["wasdjkl"];
     let keyPress = event.key;
     let pattern = new RegExp(keyPress);
@@ -20,6 +21,7 @@ document.addEventListener("keypress", (event) => {
 
     if (aviableKeyPress) {
         playSong(keyPress);
+        animation(keyPress);
     }
     else {
         console.error(`Not aviable key was pressed - ${keyPress}`);
@@ -41,4 +43,13 @@ const playSong = (buttonClick) => {
     audio.play(); 
 }
 
- 
+const animation = (buttonClick) => {
+    const keys = { w: 0, a: 1, s: 2, d: 3, j: 4, k: 5, l: 6 }
+    let element = document.querySelectorAll(".drum")[keys[buttonClick]];
+
+    element.classList.add("pressed");
+
+    setTimeout( () => {
+        element.classList.remove("pressed");
+    }, 200);
+}

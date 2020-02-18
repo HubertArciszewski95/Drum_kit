@@ -1,8 +1,8 @@
-const numberOfDrumButtons = document.querySelectorAll(".drum").length
-
 // Mouse event listener
-for (let i = 0; i < numberOfDrumButtons; i++) {
-    let element = document.querySelectorAll(".drum")[i];
+let drumArray = document.querySelectorAll(".drum");
+
+for (let i = 0; i < drumArray.length; i++) {
+    let element = drumArray[i];
     
     // Add listener to all drum buttons on page
     element.addEventListener("click", () => {
@@ -22,8 +22,7 @@ document.addEventListener("keydown", (event) => {
     if (aviableKeyPress) {
         playSong(keyPress);
         animation(keyPress);
-    }
-    else {
+    } else {
         console.error(`Not aviable key was pressed - ${keyPress}`);
     }
 });
@@ -44,8 +43,7 @@ const playSong = (buttonClick) => {
 }
 
 const animation = (buttonClick) => {
-    const keys = { w: 0, a: 1, s: 2, d: 3, j: 4, k: 5, l: 6 }
-    let element = document.querySelectorAll(".drum")[keys[buttonClick]];
+    let element = document.querySelector(`.${buttonClick}`)
 
     element.classList.add("pressed");
 
